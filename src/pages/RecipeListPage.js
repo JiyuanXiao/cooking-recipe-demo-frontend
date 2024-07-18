@@ -1,11 +1,17 @@
 import React from "react";
+import ImageBanner from "../components/ImageBanner";
+import foodBannderImage from "../assets/food-banner.png";
 
-function RecipeListPage() {
+const RecipeListPage = () => {
   return (
     <div>
-      <h1>Recipe List Page</h1>
+      <ImageBanner
+        src={foodBannderImage}
+        title="Food Recipes"
+        subtitile="Explore our collection of recipes"
+      />
     </div>
   );
-}
+};
 
 export default RecipeListPage;
