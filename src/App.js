@@ -7,14 +7,13 @@ import CreateRecipePage from "./pages/CreateRecipePage";
 function App() {
   return (
     <BrowserRouter>
-      <div className="App">
+      <div className="text-center">
         <Routes>
           <Route path="/" element={<RecipeListPage />} />
           <Route path="/recipe/:id" element={<RecipeDetailPage />} />
           <Route path="/create" element={<CreateRecipePage />} />
         </Routes>
       </div>
-      ;
     </BrowserRouter>
   );
 }
