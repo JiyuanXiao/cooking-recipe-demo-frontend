@@ -1,42 +1,4 @@
-const ingredients = [
-  {
-    id: 1,
-    ingredient: "料1",
-    quantity: 10,
-    unit: "GRAM",
-    recipe: 1,
-  },
-  {
-    id: 2,
-    ingredient: "料2",
-    quantity: 20,
-    unit: "GRAM",
-    recipe: 1,
-  },
-  {
-    id: 3,
-    ingredient: "料3",
-    quantity: 30,
-    unit: "GRAM",
-    recipe: 1,
-  },
-  {
-    id: 4,
-    ingredient: "料4",
-    quantity: 40,
-    unit: "GRAM",
-    recipe: 1,
-  },
-  {
-    id: 5,
-    ingredient: "料5",
-    quantity: 50,
-    unit: "GRAM",
-    recipe: 1,
-  },
-];
-
-const IngredientCard = () => {
+const IngredientCard = ({ ingredients }) => {
   const ingredientList = ingredients.map((ingredient) => (
     <>
       <div className="flex flex-row justify-between w-full">

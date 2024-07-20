@@ -1,51 +1,20 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import ImageBanner from "../components/ImageBanner";
 import CreateRecipeButton from "../components/CreateRecipeButton";
 import RecipeCard from "../components/RecipeCard";
 import foodBannderImage from "../assets/food-banner.png";
-
-const recipes = [
-  {
-    id: 1,
-    title: "Recipe Title 1",
-    content:
-      "Some quick example text to build on the card title and make up the bulk of the card's content.",
-  },
-  {
-    id: 2,
-    title: "Recipe Title 2",
-    content:
-      "Some quick example text to build on the card title and make up the bulk of the card's content.",
-  },
-  {
-    id: 3,
-    title: "Recipe Title 3",
-    content:
-      "Some quick example text to build on the card title and make up the bulk of the card's content.",
-  },
-  {
-    id: 4,
-    title: "Recipe Title 3",
-    content:
-      "Some quick example text to build on the card title and make up the bulk of the card's content.",
-  },
-  {
-    id: 5,
-    title: "Recipe Title 3",
-    content:
-      "Some quick example text to build on the card title and make up the bulk of the card's content.",
-  },
-];
+import { RecipeContext } from "../RecipeContext";
 
 const RecipeListPage = () => {
   const navigate = useNavigate();
+  const { recipes } = useContext(RecipeContext);
 
-  const recipeList = recipes.map((recipe) => (
+  const recipeList = [...recipes].reverse().map((recipe) => (
     <RecipeCard
       key={recipe.id}
-      title={recipe.title}
-      content={recipe.content}
+      title={recipe.name}
+      content={recipe.description}
       onClick={() => {
         navigate(`/recipe/${recipe.id}`);
       }}

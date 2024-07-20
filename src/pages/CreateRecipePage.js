@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import TimeInput from "../components/TimeInput";
 import Selector from "../components/Selector";
 import NumericInput from "../components/NumericInput";
@@ -7,8 +8,10 @@ import TextAreaInput from "../components/TextAreaInput";
 import IngredientInputs from "../components/IngredientInputs";
 import InstructionsInput from "../components/InstructionsInput";
 import Button from "react-bootstrap/Button";
+import axios from "axios";
 
 const CreateRecipePage = () => {
+  const navigate = useNavigate();
   const [recipeName, setRecipeName] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
@@ -16,7 +19,7 @@ const CreateRecipePage = () => {
   const [cookingTime, setCookingTime] = useState(0);
   const [serving, setServing] = useState(0);
   const [ingredients, setIngredients] = useState([
-    { name: "", quantity: "", unit: "" },
+    { ingredient: "", quantity: "", unit: "" },
   ]);
   const [instructions, setInstructions] = useState([
     {
@@ -37,7 +40,7 @@ const CreateRecipePage = () => {
   ];
 
   const addIngredient = () => {
-    const newIngredient = { name: "", quantity: "", unit: "" };
+    const newIngredient = { ingredient: "", quantity: "", unit: "" };
     setIngredients([...ingredients, newIngredient]);
   };
 
@@ -57,7 +60,10 @@ const CreateRecipePage = () => {
   };
 
   const addInstruction = () => {
-    const newInstruction = { step: instructions.length + 1, description: "" };
+    const newInstruction = {
+      step: instructions.length + 1,
+      description: "",
+    };
     setInstructions([...instructions, newInstruction]);
   };
 
@@ -74,6 +80,52 @@ const CreateRecipePage = () => {
       return instruction;
     });
     setInstructions(newInstructions);
+  };
+
+  const appendRecipeIdToList = (list, recipeId) => {
+    return list.map((element) => ({
+      ...element,
+      recipe: recipeId,
+    }));
+  };
+
+  const handleCreateRecipe = async () => {
+    const newRecipe = {
+      name: recipeName,
+      category: category,
+      description: description,
+      preparation_time: prepTime,
+      cooking_time: cookingTime,
+      servings: serving,
+    };
+
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_SERVER_BASE_URL}recipes/`,
+        newRecipe
+      );
+      const newRecipeId = response.data.id;
+      const ingredientsWithId = appendRecipeIdToList(ingredients, newRecipeId);
+      const instructionsWithId = appendRecipeIdToList(
+        instructions,
+        newRecipeId
+      );
+      console.log(ingredientsWithId);
+
+      await axios.post(
+        `${process.env.REACT_APP_SERVER_BASE_URL}ingredient/`,
+        ingredientsWithId
+      );
+      await axios.post(
+        `${process.env.REACT_APP_SERVER_BASE_URL}instruction/`,
+        instructionsWithId
+      );
+
+      navigate("/");
+      window.location.reload();
+    } catch (error) {
+      console.error("Failed to POST new recipe: ", error);
+    }
   };
 
   return (
@@ -156,7 +208,7 @@ const CreateRecipePage = () => {
       <div>
         <Button
           className="w-40 h-12 rounded-xl my-7 border-2 border-red-400 text-red-600 bg-red-200 hover:bg-red-300"
-          onClick={() => {}}
+          onClick={handleCreateRecipe}
         >
           Submit
         </Button>

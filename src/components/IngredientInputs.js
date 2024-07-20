@@ -33,8 +33,8 @@ const IngredientInputs = ({
     >
       <TextInput
         inputName="Ingredient Name"
-        value={ingredient.name}
-        setValue={(value) => updateIngredient(index, "name", value)}
+        value={ingredient.ingredient}
+        setValue={(value) => updateIngredient(index, "ingredient", value)}
       />
       <NumericInput
         inputName="Quantity"

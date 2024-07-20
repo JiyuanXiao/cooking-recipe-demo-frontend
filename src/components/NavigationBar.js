@@ -1,4 +1,9 @@
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import Button from "react-bootstrap/Button";
+
 const NavigationBar = () => {
+  const navigate = useNavigate();
   return (
     <nav class="bg-red-200 border-gray-200">
       <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -8,7 +13,7 @@ const NavigationBar = () => {
           </span>
         </a>
         <div class="hidden w-full md:block md:w-auto" id="navbar-default">
-          <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-red-200">
+          <ul class="font-medium flex flex-col items-center p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-red-200">
             <li>
               <a
                 href="/"
@@ -19,12 +24,14 @@ const NavigationBar = () => {
               </a>
             </li>
             <li>
-              <a
-                href="/create"
-                class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-red-400 md:p-0"
+              <Button
+                className="w-40 h-12 rounded-xl border-2 border-red-400 text-red-600 bg-red-200 hover:bg-red-300"
+                onClick={() => {
+                  navigate("/create");
+                }}
               >
                 Create Recipe
-              </a>
+              </Button>
             </li>
           </ul>
         </div>
